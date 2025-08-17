@@ -6,7 +6,9 @@ import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sproutvalley/models/blocks/collision_block.dart';
+import 'package:sproutvalley/models/blocks/intersection_block.dart';
 import 'package:sproutvalley/models/constants/global_constants.dart';
+import 'package:sproutvalley/models/constants/interact_name.dart';
 import 'package:sproutvalley/models/constants/render_priority.dart';
 import 'package:sproutvalley/models/enums/direction.dart';
 import 'package:sproutvalley/models/enums/object_state.dart';
@@ -30,6 +32,7 @@ class PlayerSprite extends SpriteAnimationComponent
   Vector2 lastPosition = Vector2.zero();
 
   late RectangleHitbox baseHitbox;
+  late IntersectionBlock intersectionBlock;
 
   double movementSpeed = 200;
 
@@ -65,6 +68,8 @@ class PlayerSprite extends SpriteAnimationComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other){
     if(other is CollisionBlock){
       onCollisionWalls(intersectionPoints);
+    }else if(other is IntersectionBlock){
+      onIntersectionCollisions(other);
     }
     super.onCollision(intersectionPoints, other);
   }
@@ -98,8 +103,17 @@ class PlayerSprite extends SpriteAnimationComponent
       position: Vector2(24,30),
       size: Vector2(10, 5),
       anchor: Anchor.bottomCenter
-    )..debugColor =  Colors.blue;
+    )..debugColor =  Colors.transparent;
     await add(baseHitbox);
+
+    intersectionBlock = IntersectionBlock(
+        name: "playerIntersection",
+        position: Vector2(24,30),
+        size: Vector2(10, 5),
+        anchor: Anchor.bottomCenter
+    )..debugColor =  Colors.blue;;
+
+    await add(intersectionBlock);
   }
 
   onCollisionWalls(Set<Vector2> onCollisionWalls){
@@ -107,6 +121,16 @@ class PlayerSprite extends SpriteAnimationComponent
       position.y = lastPosition.y;
     }else if(direction == PlayerDirection.left || direction == PlayerDirection.right){
       position.x = lastPosition.x;
+    }
+  }
+
+  onIntersectionCollisions(IntersectionBlock other){
+    switch(other.name){
+      case InteractName.farmDoorToHouse:
+        game.prevRoute = "farm";
+        game.switchScene("house");
+        break;
+
     }
   }
 

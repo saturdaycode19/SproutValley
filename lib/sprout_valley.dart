@@ -10,6 +10,7 @@ import 'package:flame_tiled_utils/flame_tiled_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:sproutvalley/models/constants/global_constants.dart';
 import 'package:sproutvalley/models/constants/render_priority.dart';
+import 'package:sproutvalley/scenes/house/house_world.dart';
 import 'package:sproutvalley/scenes/worlds/farm_world.dart';
 
 class SproutValley extends FlameGame
@@ -19,12 +20,17 @@ class SproutValley extends FlameGame
   late CameraComponent cameraComponent;
   late RouterComponent router;
 
-  late TiledComponent farmTiled;
-  late PositionComponent farmMap;
+  late TiledComponent farmTiled, houseTiled;
+  late PositionComponent farmMap, houseMap;
 
   late SpriteAnimationComponent waterFarmComponent;
 
   final imageCompiler = ImageBatchCompiler();
+
+  String? nextRoute;
+  String? prevRoute;
+
+
 
   void initWithBuildContext(BuildContext context){
     gameContext = context;
@@ -49,6 +55,14 @@ class SproutValley extends FlameGame
         },
         maintainState: false
       ),
+      'house' : WorldRoute(
+          (){
+            final houseWorld = HouseWorld();
+            cameraComponent.world = houseWorld;
+            return houseWorld;
+          },
+        maintainState: false
+      )
     }, initialRoute: 'farm', );
 
     await addAll([cameraComponent, router]);
@@ -56,6 +70,29 @@ class SproutValley extends FlameGame
 
   preRenderWorld()async{
     await renderFarm();
+    await renderHouse();
+  }
+
+  renderHouse()async{
+    houseTiled = await TiledComponent.load(
+        'house/house.tmx',
+        Vector2.all(WORLD_TILE_SIZE),
+        images: Images(prefix: 'assets/images/resources/'),
+        priority: RenderPriority.ground
+    );
+
+    houseTiled.tileMap.map.height *= 16;
+    houseTiled.tileMap.map.width *= 16;
+
+    houseMap = imageCompiler.compileMapLayer(
+        tileMap: houseTiled.tileMap,
+        layerNames: [
+          'floor',
+          'walls',
+          'furniture',
+        ]
+    );
+    houseMap.priority = RenderPriority.ground;
   }
 
   renderFarm()async{
@@ -72,7 +109,10 @@ class SproutValley extends FlameGame
     farmMap = imageCompiler.compileMapLayer(
         tileMap: farmTiled.tileMap,
         layerNames: [
-          'ground'
+          'ground',
+          'house_floor',
+          'house_walls',
+          'house_roofs'
         ]
     );
     farmMap.priority = RenderPriority.ground;
@@ -90,6 +130,11 @@ class SproutValley extends FlameGame
     waterFarmComponent = await animationCompiler.compile();
     waterFarmComponent.scale = Vector2.all(WORLD_SCALE);
     waterFarmComponent.priority = RenderPriority.water;
+  }
+
+  switchScene(String toRoute){
+    nextRoute = toRoute;
+    router.pushReplacementNamed(toRoute);
   }
 
 }

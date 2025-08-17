@@ -3,25 +3,91 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "farm/farm.tmx",
+    "activeFile": "/Users/user/Desktop/youtube/SproutValley/assets/tiles/farm/farm.tmx",
     "expandedProjectPaths": [
-        ".",
-        "farm"
+        "house",
+        "farm",
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/farm",
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles",
+        "."
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "": {
             "scaleInDock": 1
         },
-        "farm/farm.tmx": {
-            "scale": 1.1773,
-            "selectedLayer": 2,
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/farm/farm.tmx": {
+            "expandedObjectLayers": [
+                9,
+                8
+            ],
+            "scale": 4.2624,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 329.5676548033636,
-                "y": 313.0043319459781
+                "x": 177.83408408408405,
+                "y": 165.28246996996995
             }
         },
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/farm/farm.tmx#grass_tiles": {
+            "scaleInDock": 1
+        },
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/farm/farm.tmx#house_door": {
+            "scaleInDock": 2.7015
+        },
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/farm/farm.tmx#house_roof": {
+            "scaleInDock": 2.2415
+        },
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/farm/farm.tmx#house_walls": {
+            "scaleInDock": 3.3619
+        },
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/farm/farm.tmx#water": {
+            "scaleInDock": 1
+        },
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/house/house.tmx": {
+            "expandedObjectLayers": [
+                5,
+                4,
+                6
+            ],
+            "scale": 5.1542,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 155.98929028753247,
+                "y": 164.8170424120135
+            }
+        },
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/house/house.tmx#furniture": {
+            "scaleInDock": 2.5912
+        },
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/house/house.tmx#house_roof": {
+            "scaleInDock": 1
+        },
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/house/house.tmx#house_walls": {
+            "scaleInDock": 3.5254
+        },
+        "farm/farm.tmx": {
+            "scale": 1.8094,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 174.643528241406,
+                "y": 206.42201834862385
+            }
+        },
+        "farm/farm.tmx#furniture": {
+            "scaleInDock": 1
+        },
         "farm/farm.tmx#grass_tiles": {
-            "scaleInDock": 1.8487
+            "scaleInDock": 3.7154
+        },
+        "farm/farm.tmx#house_door": {
+            "scaleInDock": 1.649
+        },
+        "farm/farm.tmx#house_roof": {
+            "scaleInDock": 2.9794
+        },
+        "farm/farm.tmx#house_walls": {
+            "scaleInDock": 3.6825,
+            "scaleInEditor": 5.64
         },
         "farm/farm.tmx#water": {
             "scaleInDock": 3.6463,
@@ -29,17 +95,20 @@
         }
     },
     "frame.defaultDuration": 200,
-    "last.imagePath": "/Users/user/Desktop/youtube/sproutvalley/assets/images/resources",
-    "map.height": 30,
+    "last.imagePath": "/Users/user/Desktop/youtube/SproutValley/assets/images/resources",
+    "map.height": 20,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 60,
+    "map.width": 20,
     "openFiles": [
-        "farm/farm.tmx"
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/farm/farm.tmx",
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/house/house.tmx"
     ],
     "project": "sproutvalley.tiled-project",
     "recentFiles": [
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/house/house.tmx",
+        "/Users/user/Desktop/youtube/SproutValley/assets/tiles/farm/farm.tmx",
         "farm/farm.tmx"
     ],
     "tileset.embedInMap": true,

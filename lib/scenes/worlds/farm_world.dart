@@ -4,11 +4,14 @@ import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:sproutvalley/models/blocks/collision_block.dart';
+import 'package:sproutvalley/models/blocks/intersection_block.dart';
 import 'package:sproutvalley/models/constants/global_constants.dart';
+import 'package:sproutvalley/models/constants/interact_name.dart';
 import 'package:sproutvalley/objects/characters/player/player_sprite.dart';
 import 'package:sproutvalley/sprout_valley.dart';
 
-class FarmWorld extends World with HasGameReference<SproutValley>{
+class FarmWorld extends World
+    with HasGameReference<SproutValley>{
 
   late TiledComponent mapTiled;
   late Vector2 tileMapSize;
@@ -22,6 +25,7 @@ class FarmWorld extends World with HasGameReference<SproutValley>{
   FutureOr<void> onLoad() async {
     await loadMaps();
     await loadCollision();
+    await loadInteractCollision();
     await loadCharacters();
     return super.onLoad();
   }
@@ -69,7 +73,12 @@ class FarmWorld extends World with HasGameReference<SproutValley>{
 
   loadCollision()async{
     await loadWallCollision();
+    await loadHouseWallCollision();
   }
+
+  loadInteractCollision()async{
+    await loadInteractHouseCollision();
+}
 
   loadWallCollision()async{
     final objectLayer = mapTiled.tileMap.getLayer<ObjectGroup>('walls')!;
@@ -77,6 +86,29 @@ class FarmWorld extends World with HasGameReference<SproutValley>{
       final block = CollisionBlock(
         position: Vector2(object.x * WORLD_SCALE, object.y * WORLD_SCALE),
         size: Vector2(object.width * WORLD_SCALE, object.height * WORLD_SCALE)
+      );
+      await add(block);
+    }
+  }
+
+  loadHouseWallCollision()async{
+    final objectLayer = mapTiled.tileMap.getLayer<ObjectGroup>('house_walls')!;
+    for(final TiledObject object in objectLayer.objects){
+      final block = CollisionBlock(
+          position: Vector2(object.x * WORLD_SCALE, object.y * WORLD_SCALE),
+          size: Vector2(object.width * WORLD_SCALE, object.height * WORLD_SCALE)
+      );
+      await add(block);
+    }
+  }
+
+  loadInteractHouseCollision()async{
+    final objectLayer = mapTiled.tileMap.getLayer<ObjectGroup>('house_door')!;
+    for(final TiledObject object in objectLayer.objects){
+      final block = IntersectionBlock(
+          name: InteractName.farmDoorToHouse,
+          position: Vector2(object.x * WORLD_SCALE, object.y * WORLD_SCALE),
+          size: Vector2(object.width * WORLD_SCALE, object.height * WORLD_SCALE),
       );
       await add(block);
     }
