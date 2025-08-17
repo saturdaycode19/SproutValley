@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/SproutValley.iml" filepath="$PROJECT_DIR$/.idea/SproutValley.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/sproutvalley_android.iml" filepath="$PROJECT_DIR$/android/sproutvalley_android.iml" />
     </modules>
   </component>
 </project>

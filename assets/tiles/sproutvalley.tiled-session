@@ -3,12 +3,29 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "farm/farm.tmx",
     "expandedProjectPaths": [
+        ".",
+        "farm"
     ],
     "fileStates": {
         "": {
             "scaleInDock": 1
+        },
+        "farm/farm.tmx": {
+            "scale": 1.1773,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 329.5676548033636,
+                "y": 313.0043319459781
+            }
+        },
+        "farm/farm.tmx#grass_tiles": {
+            "scaleInDock": 1.8487
+        },
+        "farm/farm.tmx#water": {
+            "scaleInDock": 3.6463,
+            "scaleInEditor": 3.44
         }
     },
     "frame.defaultDuration": 200,
@@ -19,9 +36,11 @@
     "map.tileWidth": 16,
     "map.width": 60,
     "openFiles": [
+        "farm/farm.tmx"
     ],
     "project": "sproutvalley.tiled-project",
     "recentFiles": [
+        "farm/farm.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {

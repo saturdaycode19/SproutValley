@@ -1,15 +1,19 @@
 import 'dart:async';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sproutvalley/models/blocks/collision_block.dart';
 import 'package:sproutvalley/models/constants/global_constants.dart';
 import 'package:sproutvalley/models/constants/render_priority.dart';
 import 'package:sproutvalley/models/enums/direction.dart';
 import 'package:sproutvalley/models/enums/object_state.dart';
 import 'package:sproutvalley/sprout_valley.dart';
 
-class PlayerSprite extends SpriteAnimationComponent with HasGameReference<SproutValley>{
+class PlayerSprite extends SpriteAnimationComponent
+    with HasGameReference<SproutValley>, CollisionCallbacks{
 
   PlayerSprite({required Vector2 position, required Vector2 size}) : super(
     position: position,
@@ -23,7 +27,11 @@ class PlayerSprite extends SpriteAnimationComponent with HasGameReference<Sprout
 
   Vector2 srcSize = Vector2(48, 48);
 
-  double movementSpeed = 100;
+  Vector2 lastPosition = Vector2.zero();
+
+  late RectangleHitbox baseHitbox;
+
+  double movementSpeed = 200;
 
   PlayerState state = PlayerState.idle;
   PlayerDirection direction = PlayerDirection.down;
@@ -36,9 +44,13 @@ class PlayerSprite extends SpriteAnimationComponent with HasGameReference<Sprout
   };
 
   @override
+  bool get debugMode => true;
+
+  @override
   FutureOr<void> onLoad() async{
     await loadAssets();
     await loadInputs();
+    await loadHitbox();
     return super.onLoad();
   }
 
@@ -48,6 +60,15 @@ class PlayerSprite extends SpriteAnimationComponent with HasGameReference<Sprout
     _playerMove(dt);
     super.update(dt);
   }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other){
+    if(other is CollisionBlock){
+      onCollisionWalls(intersectionPoints);
+    }
+    super.onCollision(intersectionPoints, other);
+  }
+
 
   loadAssets()async{
     idleDownAnimation = _createSpriteSheetAnimation("characters/players/idle/player_idle_down.png");
@@ -63,12 +84,30 @@ class PlayerSprite extends SpriteAnimationComponent with HasGameReference<Sprout
     animation = idleDownAnimation;
   }
 
+
   _createSpriteSheetAnimation(String name, {int length = 7, double stepTime = 0.1}){
     return SpriteSheet(
       image: game.images.fromCache(name),
       srcSize: srcSize,
       spacing: 1
     ).createAnimation(row: 0, to: length, stepTime: stepTime);
+  }
+
+  loadHitbox()async{
+    baseHitbox = RectangleHitbox(
+      position: Vector2(24,30),
+      size: Vector2(10, 5),
+      anchor: Anchor.bottomCenter
+    )..debugColor =  Colors.blue;
+    await add(baseHitbox);
+  }
+
+  onCollisionWalls(Set<Vector2> onCollisionWalls){
+    if(direction == PlayerDirection.up || direction == PlayerDirection.down){
+      position.y = lastPosition.y;
+    }else if(direction == PlayerDirection.left || direction == PlayerDirection.right){
+      position.x = lastPosition.x;
+    }
   }
 
   loadInputs()async{
@@ -109,6 +148,9 @@ class PlayerSprite extends SpriteAnimationComponent with HasGameReference<Sprout
       _keyWeight[LogicalKeyboardKey.keyS]! - _keyWeight[LogicalKeyboardKey.keyW]!;
 
   _playerMove(double dt){
+
+    lastPosition.setFrom(position);
+
     if(xInputKey == -1 && yInputKey == 0){
       _walkLeft(dt);
     }else if(xInputKey == 1 && yInputKey == 0){

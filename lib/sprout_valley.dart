@@ -12,7 +12,8 @@ import 'package:sproutvalley/models/constants/global_constants.dart';
 import 'package:sproutvalley/models/constants/render_priority.dart';
 import 'package:sproutvalley/scenes/worlds/farm_world.dart';
 
-class SproutValley extends FlameGame with HasKeyboardHandlerComponents{
+class SproutValley extends FlameGame
+    with HasKeyboardHandlerComponents, HasCollisionDetection{
 
   late BuildContext gameContext;
   late CameraComponent cameraComponent;
